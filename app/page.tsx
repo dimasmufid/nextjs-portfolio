@@ -4,14 +4,19 @@ export default function Page() {
   return (
     <section>
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-        My Portfolio
+        Who am I?
       </h1>
       <p className="mb-4">
-        {`I'm a Vim enthusiast and tab advocate, finding unmatched efficiency in
-        Vim's keystroke commands and tabs' flexibility for personal viewing
-        preferences. This extends to my support for static typing, where its
-        early error detection ensures cleaner code, and my preference for dark
-        mode, which eases long coding sessions by reducing eye strain.`}
+        My name is <span className="font-semibold">Dimas Mufid</span>. I'm an
+        engineer with a passion for building products that help people do more
+        with their data.
+        I believe that data is a powerful tool for making better decisions, and
+        you don't have to have a full-time team to get started.
+      </p>
+      <p className="mb-4">
+        Here it is, I hope I can help you with your journey in building data
+        driven culture into your organization. Talk to me if you want to know
+        more.
       </p>
       <div className="my-8">
         <BlogPosts />
