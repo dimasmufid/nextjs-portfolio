@@ -104,13 +104,68 @@ export default async function Blog({ params }) {
   
   // Process other markdown elements
   processedContent = processedContent
-    .replace(/^##\s+(.*?)$/gm, '<h2>$1</h2>') // h2
-    .replace(/^###\s+(.*?)$/gm, '<h3>$1</h3>') // h3
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold
-    .replace(/\*(.*?)\*/g, '<em>$1</em>') // italic
-    .replace(/`([^`]+)`/g, '<code>$1</code>') // inline code
-    .replace(/\n\n/g, '<br /><br />') // paragraphs
-    .replace(/\n/g, ' '); // line breaks within paragraphs
+    // Headers
+    .replace(/^#\s+(.*?)$/gm, '<h1>$1</h1>')
+    .replace(/^##\s+(.*?)$/gm, '<h2>$1</h2>')
+    .replace(/^###\s+(.*?)$/gm, '<h3>$1</h3>')
+    .replace(/^####\s+(.*?)$/gm, '<h4>$1</h4>')
+    .replace(/^#####\s+(.*?)$/gm, '<h5>$1</h5>')
+    .replace(/^######\s+(.*?)$/gm, '<h6>$1</h6>')
+    
+    // Blockquotes
+    .replace(/^>\s+(.*?)$/gm, '<blockquote>$1</blockquote>')
+    
+    // Horizontal Rule
+    .replace(/^---$/gm, '<hr />')
+    
+    // Links [text](url)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    
+    // Images ![alt](url)
+    .replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" />')
+    
+    // Bold and Italic
+    .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>') // Bold + Italic
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+    .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic
+    .replace(/__(.*?)__/g, '<strong>$1</strong>') // Bold alternative
+    .replace(/_(.*?)_/g, '<em>$1</em>') // Italic alternative
+    
+    // Strikethrough
+    .replace(/~~(.*?)~~/g, '<del>$1</del>')
+    
+    // Inline code
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    
+    // Ordered lists
+    .replace(/^(\d+)\.\s+(.*?)$/gm, '<li>$2</li>')
+    
+    // Unordered lists
+    .replace(/^[-*+]\s+(.*?)$/gm, '<li>$1</li>')
+    
+    // Task lists
+    .replace(/^[-*]\s+\[(x| )\]\s+(.*?)$/gm, '<li class="task-list-item"><input type="checkbox" $1 disabled /> $2</li>')
+    
+    // Wrap lists in ul/ol tags
+    .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+    
+    // Tables
+    .replace(/^\|(.+)\|$/gm, (match, content) => {
+      const cells = content.split('|').map(cell => cell.trim());
+      return `<tr>${cells.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
+    })
+    .replace(/(<tr>.*<\/tr>\n?)+/g, '<table>$&</table>')
+    
+    // Handle paragraphs (only convert double newlines to paragraphs)
+    .replace(/\n\n+/g, '</p><p>')
+    
+    // Clean up any remaining single newlines
+    .replace(/\n/g, ' ');
+
+  // Wrap the entire content in a paragraph if it's not already wrapped
+  if (!processedContent.startsWith('<p>')) {
+    processedContent = '<p>' + processedContent + '</p>';
+  }
 
   return (
     <section>
