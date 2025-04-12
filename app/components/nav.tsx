@@ -7,6 +7,9 @@ const navItems = {
   '/blog': {
     name: 'blog',
   },
+  '/work': {
+    name: 'work',
+  },
   'mailto:dimasmufid.data@gmail.com': {
     name: 'contact me',
   },
