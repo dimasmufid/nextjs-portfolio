@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { formatDate, getBlogPosts } from 'app/blog/utils'
 import { baseUrl } from 'app/sitemap'
 import BlogContent from 'app/components/BlogContent'
+import PrismSetup from 'app/components/PrismSetup'
 
 // Define types for code blocks and mermaid diagrams
 interface CodeBlockType {
@@ -169,6 +170,7 @@ export default async function Blog({ params }) {
 
   return (
     <section>
+      <PrismSetup />
       <script
         type="application/ld+json"
         suppressHydrationWarning
