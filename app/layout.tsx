@@ -16,6 +16,15 @@ export const metadata: Metadata = {
     template: '%s | Dimas Mufid',
   },
   description: 'This is my portfolio.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png' },
+    ],
+  },
   openGraph: {
     title: 'Dimas Mufid',
     description: 'This is my portfolio.',
